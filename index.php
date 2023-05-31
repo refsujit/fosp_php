@@ -67,6 +67,13 @@ if (isset($_POST['submit'])) {
 
 <body>
 
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li style="float:right"><a class="active" href="#about">About</a></li>
+  </ul>
+  
   <h2>Registration Form</h2>
 
   <form action="index.php" method="post">

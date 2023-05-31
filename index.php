@@ -108,8 +108,9 @@ if (isset($_POST['submit'])) {
 
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
+      <span class="psw">Already Registered <a href="login.php">Login Now?</a></span>
     </div>
+
   </form>
 
 </body>

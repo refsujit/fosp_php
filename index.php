@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 
   <form action="index.php" method="post">
     <div class="imgcontainer">
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      <img src="img/logo.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">

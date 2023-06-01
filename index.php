@@ -1,15 +1,9 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "fosp_php";
+require_once('./config/database.php');
+require_once('./helpers/helper.php');
 
-$conn = new mysqli($host, $username, $password, $database);
-if ($conn->connect_errno == 0) {
-} else {
-  die("error on connection ");
-}
-
+session_start();
+validateRegistrationLoginPage();
 
 if (isset($_POST['submit'])) {
   session_start();
@@ -20,6 +14,7 @@ if (isset($_POST['submit'])) {
   $password = $_POST['password'];
   $cpassword = $_POST['cpassword'];
 
+  if(isset($email) && !empty($email))
   // Password Confirmation
   if ($password == $cpassword) {
     // Check email existence
@@ -67,11 +62,20 @@ if (isset($_POST['submit'])) {
 
 <body>
 
+  <ul>
+  <li><a href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li style="float:right"><a class="" href="login.php">Login</a></li>
+    <li style="float:right"><a class="" href="index.php">Register</a></li>
+    <li style="float:right"><a class="" href="logout.php">Logout</a></li>
+  </ul>
+  
   <h2>Registration Form</h2>
 
   <form action="index.php" method="post">
     <div class="imgcontainer">
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      <img src="img/logo.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
@@ -108,8 +112,9 @@ if (isset($_POST['submit'])) {
 
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
+      <span class="psw">Already Registered <a href="login.php">Login Now?</a></span>
     </div>
+
   </form>
 
 </body>

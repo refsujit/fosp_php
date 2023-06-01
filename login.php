@@ -1,14 +1,9 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "fosp_php";
+require_once('./config/database.php');
+require_once('./helpers/helper.php');
 
-$conn = new mysqli($host, $username, $password, $database);
-if ($conn->connect_errno == 0) {
-} else {
-    die("error on connection ");
-}
+session_start();
+validateRegistrationLoginPage();
 
 
 if (isset($_POST['submit'])) {
@@ -20,7 +15,7 @@ if (isset($_POST['submit'])) {
 
 
     // Check email and password existence
-    $sql = "select * from users";
+    $sql = "select * from users where email = '$email' and password = '$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 0) {
@@ -30,7 +25,7 @@ if (isset($_POST['submit'])) {
 
         $_SESSION['auth']['name'] = $name =  $row['name'];
         $_SESSION['auth']['email'] = $email =  $row['email'];
-        
+
         header('location:dashboard.php');
     }
 
@@ -58,12 +53,17 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-<ul>
-  <li><a href="#home">Home</a></li>
-  <li><a href="#news">News</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li style="float:right"><a class="active" href="#about">About</a></li>
-</ul>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <?php if (isLoggedIn()) { ?>
+            <li style="float:right"><a class="" href="logout.php">Logout</a></li>
+        <?php } else { ?>
+            <li style="float:right"><a class="" href="login.php">Login</a></li>
+            <li style="float:right"><a class="" href="index.php">Register</a></li>
+        <?php } ?>
+    </ul>
 
     <h2>Login Panel</h2>
 

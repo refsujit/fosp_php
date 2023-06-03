@@ -1,122 +1,120 @@
 <?php
-require_once('./config/database.php');
-require_once('./helpers/helper.php');
 
 session_start();
-validateRegistrationLoginPage();
 
-if (isset($_POST['submit'])) {
-  session_start();
-
-  // Get values from users
-  $_SESSION['name'] = $name = $_POST['name'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $cpassword = $_POST['cpassword'];
-
-  if(isset($email) && !empty($email))
-  // Password Confirmation
-  if ($password == $cpassword) {
-    // Check email existence
-    $sql = "select * from users where email = '$email'";
-    $result = $conn->query($sql);
-    // print_r($result);
-
-    if ($result->num_rows > 0) {
-      $message['error'] = "Email already exist";
-    } else {
-      // Registration 
-      $sql = "insert into users(name, email, password) values ('$name','$email','$password')";
-      $result = $conn->query($sql);
-      if ($result) {
-        $message['success'] = "User registered successfully";
-      } else {
-        $message['error'] = "Unable to insert";
-      }
-    }
-  } else {
-    $message['error'] = "Password do not matched";
-  }
-  // die;
-}
+require_once('./helpers/helper.php');
+require_once(('./config/database.php'));
 
 
+$sql = "select * from users where email <> 'refsujit@gmail.com' order by id desc limit 10";
+$result = $conn->query($sql);
 
+// die;
 
 
 ?>
 
 
-
-
-
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="css/style.css" rel="stylesheet">
-  <style>
-  </style>
-</head>
+<?php
+require_once('./_partials/head.php');
+
+?>
 
 <body>
 
-  <ul>
-  <li><a href="#home">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li style="float:right"><a class="" href="login.php">Login</a></li>
-    <li style="float:right"><a class="" href="index.php">Register</a></li>
-    <li style="float:right"><a class="" href="logout.php">Logout</a></li>
-  </ul>
-  
-  <h2>Registration Form</h2>
+<?php
+require_once('./_partials/navbar.php');
+?>
 
-  <form action="index.php" method="post">
-    <div class="imgcontainer">
-      <img src="img/logo.png" alt="Avatar" class="avatar">
+<div class="slideshow-container">
+
+    <div class="mySlides fade">
+        <div class="numbertext">1 / 3</div>
+        <img src="./img/sld1.png" style="width:100%;height: 300px">
+        <div class="text">Admission Open BE Computer</div>
     </div>
 
-    <div class="container">
-
-      <?php if (isset($message['error'])) {  ?>
-        <p style="color:red"><?php echo $message['error'] ?></p>
-
-      <?php } ?>
-
-
-      <?php if (isset($message['success'])) {  ?>
-        <p style="color:green"><?php echo $message['success'] ?></p>
-
-      <?php } ?>
-
-
-      <label for="name"><b>Name</b></label>
-      <input type="text" placeholder="Enter Name" name="name">
-
-      <label for="email"><b>Email</b></label>
-      <input type="email" placeholder="Enter Email" name="email">
-
-      <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter password" name="password">
-
-      <label for="cpassword"><b>Confirm Password</b></label>
-      <input type="password" placeholder="Confirm password" name="cpassword">
-
-      <button type="submit" name="submit">Sign Up</button>
-      <!-- <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label> -->
+    <div class="mySlides fade">
+        <div class="numbertext">2 / 3</div>
+        <img src="./img/sld.png" style="width:100%;height: 300px">
+        <div class="text">BE IV 2020 - Tour</div>
     </div>
 
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw">Already Registered <a href="login.php">Login Now?</a></span>
+    <div class="mySlides fade">
+        <div class="numbertext">3 / 3</div>
+        <img src="./img/sld3.png" style="width:100%;height: 300px">
+        <div class="text">Admission Open BBA</div>
     </div>
 
-  </form>
+</div>
+<br>
+
+<div style="text-align:center">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+</div>
+
+
+<h2>Recent => 10 Registered Users</h2>
+
+<?php
+require_once('./helpers/flash.php');
+?>
+
+
+<div style="overflow-x:auto;">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Registered On</th>
+        </tr>
+
+        <?php while ($row = $result->fetch_assoc()) { ?>
+
+            <tr>
+                <td><?php echo $row['id']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['email']; ?></td>
+                <td><?php echo $row['reg_date']; ?>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+</div>
+
+
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 4000); // Change image every 2 seconds
+    }
+</script>
+
 
 </body>
+
 
 </html>

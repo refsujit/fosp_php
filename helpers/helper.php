@@ -38,7 +38,7 @@ function baseURL()
 
 // get default website root directory
 
-    $tmpURL = dirname(__FILE__);
+     $tmpURL = dirname(__DIR__);
 
 // when use dirname(__FILE__) will return value like this "C:\xampp\htdocs\my_website",
 
@@ -46,13 +46,13 @@ function baseURL()
 
 // replace any backslashes to slash in this case use chr value "92"
 
-    $tmpURL = str_replace(chr(92), '/', $tmpURL);
+     $tmpURL = str_replace(chr(92), '/', $tmpURL);
 
 // now replace any same string in $tmpURL value to null or ''
 
 // and will return value like /localhost/my_website/ or just /my_website/
 
-    $tmpURL = str_replace($_SERVER['DOCUMENT_ROOT'], '', $tmpURL);
+     $tmpURL = str_replace($_SERVER['DOCUMENT_ROOT'], '', $tmpURL);
 
 // delete any slash character in first and last of value
 

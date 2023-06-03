@@ -5,6 +5,8 @@ require_once('./../helpers/helper.php');
 session_start();
 validateRegistrationLoginPage();
 
+
+
 if (isset($_POST['submit'])) {
 
 
@@ -48,7 +50,7 @@ if (isset($_POST['submit'])) {
 
                 // Registration
                 if(is_null($upload_path)){
-                     $sql = "insert into users(name, email, password,reg_date, image) values ('$name','$email','$password','$dateTime', null)";
+                      $sql = "insert into users(name, email, password,reg_date, image) values ('$name','$email','$password','$dateTime', null);";
                 }else{
                      $sql = "insert into users(name, email, password, reg_date,image) values ('$name','$email','$password','$dateTime' ,'$fileName')";
                 }

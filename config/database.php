@@ -16,4 +16,3 @@ if ($conn->connect_errno == 0) {
 } else {
   die("error on connection ");
 }
-

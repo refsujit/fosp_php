@@ -12,6 +12,7 @@
 - Redirect page from login/logout if authenticated before
 - Working with Navbar
 - Working with MySQL
+- File Upload (Validation of Image and its size not done yet)
 - Image Slider 
 - Database Connectivity
   - MySQL
